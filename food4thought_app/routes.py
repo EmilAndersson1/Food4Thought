@@ -6,7 +6,14 @@ from datetime import datetime
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    recipe_list = []
+    sql = sql = "select username, headline, preamble, instructions, published, recipe_ID from recipe"
+    db.cursor.execute(sql)
+
+    for recipe in db.cursor:
+        recipe_list.append(recipe)
+
+    return render_template("index.html", recipe_list = recipe_list)
 
 
 @app.route('/login/')
