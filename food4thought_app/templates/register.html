@@ -7,7 +7,7 @@
         <link rel="stylesheet" type="text/css" href="/static/style.css">
         <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
         <script src="https://kit.fontawesome.com/2145d415da.js" crossorigin="anonymous"></script>
-        <title>Logga in - Food4Thought</title>
+        <title>Registrera - Food4Thought</title>
     </head>
     <body>
         
@@ -17,7 +17,7 @@
                     
                     <div class="card" style="width: 500px;">
                         <div class="card-header">
-                            <h3>Logga in</h3>
+                            <h3>Registrering</h3>
                         </div>
                         <div class="card-body ">
                             <form action="#" method="POST">
@@ -27,28 +27,27 @@
                                     </div>
                                     <input type="text" class="form-control" placeholder="Email"> 
                                 </div>
-
+                                <div class="form-group input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Förnamn" name="firstname" style="max-width: 180px;"> 
+                                    <input type="text" class="form-control" placeholder="Efternamn" name="lastname">
+                                </div>
                                 <div class="input-group form-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                                     </div>
-                                    <input type="password" class="form-control" placeholder="Lösenord">
-                                </div>
-
-                                <div class="form-check text-center">
-                                    <input class="form-check-input" type="checkbox" value="" id="rememberMe">
-                                    <label class="form-check-label" for="rememberMe">
-                                    Kom ihåg mig
-                                    </label>
+                                    <input type="password" class="form-control" placeholder="Välj lösenord">
                                 </div>
                                 <div class="form-group mt-4">
-                                    <input type="submit" value="Logga in!" class="btn btn-lg btn-secondary btn-block mt-4">
+                                    <input type="submit" value="Registrera!" class="btn btn-lg btn-secondary btn-block mt-4">
                                 </div>
                             </form>
                         </div>
                         <div class="card-footer">
                             <div class="d-flex justify-content-center links">
-                                <p>Har du inget konto? <a href="{{url_for('register')}}"> Registera dig!</a></p>
+                                <p>Har du redan ett konto?<a href="{{url_for('login')}}"> Logga in!</a></p>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <a href="#"><small>Glömt ditt lösenord?</small></a>
