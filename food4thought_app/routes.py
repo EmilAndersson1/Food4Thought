@@ -20,6 +20,31 @@ def index():
 def login():
     return render_template("login.html")
 
+@app.route('/login_user/', methods=['POST'])
+def login_user():
+    email = request.form["email"]
+    user_password = request.form["user_password"]
+
+    sql= "select email, user_password from users where email = %s and user_password = %s"
+    sql_list = []
+    db.cursor.execute(sql, (email, user_password))
+    for item in db.cursor:
+        for i in item:
+            sql_list.append(i)
+
+    input_list = []
+
+    input_list.append(email)
+    input_list.append(user_password)
+
+    print(input_list)
+    print(sql_list)
+
+    if input_list==sql_list:
+        return redirect(url_for("index"))
+    else:
+        return redirect(url_for("login"))
+
 @app.route('/register/')
 def register():
     return render_template("register.html")
