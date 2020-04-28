@@ -12,7 +12,7 @@
     {% block content %}
     <div class="container">
     <h1 class="mt-2">Skapa recept</h1>
-    
+        <!-- Formulär för lägga till recept i databasen -->
         <form action="/add_recipe/" method="POST">
             <div class="form-row mt-4">
                 <div class="col-md-4 mb-3">
@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="title">Beskrivning:</label>
-                    <input type="text" class="form-control" id="description" name="description" placeholder="Kort beskrivning..." onkeypress="return isNumber(event)" required>
+                    <input type="text" class="form-control" id="description" name="description" placeholder="Kort beskrivning..." required>
                 </div>
             </div>
             <div class="form-row">
