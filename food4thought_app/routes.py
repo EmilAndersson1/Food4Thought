@@ -24,6 +24,21 @@ def login():
 def register():
     return render_template("register.html")
 
+@app.route('/add-user/', methods=['POST'])
+def add_user():
+    email = request.form["email"]
+    firstname = request.form["firstname"]
+    lastname = request.form["lastname"]
+    password = request.form["password"]
+
+    sql= "insert into users(email, firstname, lastname, user_password) values (%s,%s,%s,%s)"
+
+    db.cursor.execute(sql, (email, firstname, lastname, password))
+    db.conn.commit()
+
+    return redirect(url_for("index"))
+
+
 @app.route('/new_recipe/')
 def new_recipe():
 
