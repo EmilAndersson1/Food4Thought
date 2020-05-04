@@ -30,7 +30,6 @@ def new_recipe():
     return render_template("new_recipe.html")
 
 #tar från formulär för att lägga till recept i databasen
-
 @app.route('/add_recipe/', methods=['POST'])
 def add_recipe():
     now = datetime.now()
