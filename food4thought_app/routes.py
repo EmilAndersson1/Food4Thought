@@ -3,7 +3,6 @@ from food4thought_app import app
 from food4thought_app.database import db
 from datetime import datetime
 
-
 @app.route('/')
 def index():
     recipe_list = []
@@ -43,7 +42,7 @@ def add_recipe():
 
     return redirect(url_for("index"))
 
-
+   
 @app.route('/recipe/<recipe_ID>/')
 def show_recipe(recipe_ID):
     recipe = []
@@ -53,3 +52,27 @@ def show_recipe(recipe_ID):
     [recipe.append(i) for recipes in db.cursor for i in recipes ]
     
     return render_template("recipe.html", recipe=recipe)
+ 
+
+@app.route('/generator/')
+def generator():
+
+    return render_template("generator.html")
+
+@app.route('/generator-number/', methods=['POST'])
+def gen_number():
+    number = request.form["number"]
+    recipe_list = []
+    psql = "select * from recipe where recipe_id = %s"
+    db.cursor.execute(psql,(number,))
+
+    for recipe in db.cursor:
+        for i in recipe:
+            recipe_list.append(i)
+    print(recipe_list)
+    return redirect(url_for("matsedel", recipe_list = recipe_list))
+
+@app.route('/matsedel/')
+def matsedel():
+    
+    return render_template("matsedel.html", recipe = request.args.get("recipe_list"))
