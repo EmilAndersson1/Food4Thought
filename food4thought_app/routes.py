@@ -3,7 +3,8 @@ from food4thought_app import app
 from food4thought_app.database import db
 from datetime import datetime
 
-#skriver ut recepten på startsidan
+from random import randint
+
 @app.route('/')
 def index():
     recipe_list = []
@@ -111,11 +112,13 @@ def add_recipe():
         db.cursor.execute(sql2, (ingredient_name, volume, measurement))
         db.conn.commit()
 
+
     return redirect(url_for("index"))
 
 #tar data från databasen för att skriva ut det på recipe.html
 @app.route('/recipe/<recipe_id>/')
 def show_recipe(recipe_id):
+
     recipe = []
     sql = "select recipe_id, username, headline, preamble, instructions, published from recipe where recipe_id = %s"
     db.cursor.execute(sql,(recipe_id,))
@@ -133,6 +136,41 @@ def show_recipe(recipe_id):
     """     
     return render_template("recipe.html", recipe=recipe)
 
+ 
+
+@app.route('/generator/')
+def generator():
+
+    return render_template("generator.html")
+
+@app.route('/generator-number/', methods=['POST'])
+def gen_number():
+    number = request.form["number"]
+    recipe_list = []
+    psql = "select * from recipe where recipe_id = %s"
+    amount_of_recipes = "select count(*) from recipe"
+    db.cursor.execute(amount_of_recipes)
+    amount = db.cursor.fetchone()
+    lmao = ""
+    for a in amount:
+        lmao = a
+    random_numbers = []
+    for i in range(int(number)):
+        random_numbers.append(randint(0, lmao))
+    for i in random_numbers:
+        db.cursor.execute(psql,(i,))
+        for recipe in db.cursor:
+            recipe_list.append(list(recipe))
+            
+    print(recipe_list)
+    return redirect(url_for("matsedel", recipe_list = recipe_list))
+
+@app.route('/matsedel/')
+def matsedel():
+    
+    return render_template("matsedel.html", recipe = request.args.get("recipe_list"))
+
+
 """
 @app.route('/add_comment/', methods=['POST'])
 def add_comment():
@@ -149,3 +187,4 @@ def add_comment():
 
     return redirect("/recipe/{}/".format(recipe_ID))
 """
+
