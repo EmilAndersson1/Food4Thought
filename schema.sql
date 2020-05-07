@@ -11,7 +11,7 @@ create table users(
 );
 
 create table recipe(
-    recipe_ID serial,
+    recipe_id serial,
     username varchar(255) REFERENCES users(email),
     headline varchar(255), 
     preamble text, 
@@ -21,11 +21,11 @@ create table recipe(
 );
 
 create table ingredient_in_recipe(
-    ingredient_name varchar(255) REFERENCES ingredient(ingredient_name),
+    ingredient_name varchar(255),
     recipe_ID integer REFERENCES recipe(recipe_ID),
     volume integer,
     measurement varchar(255),
-    CONSTRAINT ingredient_in_recipe_ID PRIMARY KEY(ingredient_name, recipe_ID)
+    PRIMARY KEY(ingredient_name)
 );
 
 create table ingredient(
@@ -34,32 +34,32 @@ create table ingredient(
 );
 
 create table comment(
-    comment_ID serial,
-    recipe_ID integer REFERENCES recipe(recipe_ID), 
+    comment_id serial,
+    recipe_id integer REFERENCES recipe(recipe_ID), 
     username varchar(255) REFERENCES users(email), 
     comment text, 
     curr_time varchar(255), 
-    PRIMARY KEY (comment_ID)
+    PRIMARY KEY (comment_id)
 );
 
 create table images(
-    image_ID serial,
+    image_id serial,
     image_filename varchar(255),
     alt_text varchar(255),
-    PRIMARY KEY(image_ID)
+    PRIMARY KEY(image_id)
 );
 
 create table images_in_recipe(
-    image_ID integer REFERENCES images(image_ID), 
-    recipe_ID integer REFERENCES recipe(recipe_ID), 
+    image_id integer REFERENCES images(image_id), 
+    recipe_id integer REFERENCES recipe(recipe_id), 
     image_text text, 
-    CONSTRAINT images_in_recipe_ID PRIMARY KEY(image_ID, recipe_ID)
+    CONSTRAINT images_in_recipe_id PRIMARY KEY(image_id, recipe_id)
 );
 
 create table images_in_profile(
-    image_ID integer REFERENCES images(image_ID), 
+    image_id integer REFERENCES images(image_id), 
     username varchar(255) REFERENCES users(email), 
     image_text text, 
-    CONSTRAINT images_in_profile_ID PRIMARY KEY(image_ID, username)
+    CONSTRAINT images_in_profile_id PRIMARY KEY(image_id, username)
 );
 

@@ -20,25 +20,25 @@
                             <h3>Registrering</h3>
                         </div>
                         <div class="card-body ">
-                            <form action="#" method="POST">
+                            <form action="/add-user/" method="POST">
                                 <div class="input-group form-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fas fa-envelope"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Email"> 
+                                    <input type="email" class="form-control" name="email" placeholder="Email" required> 
                                 </div>
                                 <div class="form-group input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Förnamn" name="firstname" style="max-width: 180px;"> 
-                                    <input type="text" class="form-control" placeholder="Efternamn" name="lastname">
+                                    <input type="text" class="form-control" placeholder="Förnamn" name="firstname" style="max-width: 180px;" required> 
+                                    <input type="text" class="form-control" placeholder="Efternamn" name="lastname" required>
                                 </div>
                                 <div class="input-group form-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                                     </div>
-                                    <input type="password" class="form-control" placeholder="Välj lösenord">
+                                    <input type="password" class="form-control" name="password" placeholder="Välj lösenord" required>
                                 </div>
                                 <div class="form-group mt-4">
                                     <input type="submit" value="Registrera!" class="btn btn-lg btn-secondary btn-block mt-4">
