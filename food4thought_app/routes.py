@@ -2,6 +2,7 @@ from flask import render_template, url_for, request, redirect
 from food4thought_app import app
 from food4thought_app.database import db
 from datetime import datetime
+from random import randint
 
 @app.route('/')
 def index():
@@ -64,11 +65,20 @@ def gen_number():
     number = request.form["number"]
     recipe_list = []
     psql = "select * from recipe where recipe_id = %s"
-    db.cursor.execute(psql,(number,))
-
-    for recipe in db.cursor:
-        for i in recipe:
-            recipe_list.append(i)
+    amount_of_recipes = "select count(*) from recipe"
+    db.cursor.execute(amount_of_recipes)
+    amount = db.cursor.fetchone()
+    lmao = ""
+    for a in amount:
+        lmao = a
+    random_numbers = []
+    for i in range(int(number)):
+        random_numbers.append(randint(0, lmao))
+    for i in random_numbers:
+        db.cursor.execute(psql,(i,))
+        for recipe in db.cursor:
+            recipe_list.append(list(recipe))
+            
     print(recipe_list)
     return redirect(url_for("matsedel", recipe_list = recipe_list))
 

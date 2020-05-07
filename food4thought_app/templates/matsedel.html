@@ -19,15 +19,24 @@
           <div class="col-md-3">
             <img src="https://img.koket.se/sociallarge/lasagne-de-luxe.jpg" class="card-img" alt="">
           </div>
-          <div class="col-md-9">
-            <div class="card-body">
-              <h5 class="card-title">{{recipe[4]}}</h5>
-              <p class="card-text">{{recipe[0]}}</p>
-              <a href="/recipe/{{recipe[0]}}" class="btn btn-info float-right">Gå till recept</a>
-              <p class="card-text"><small class="text-muted">Published: {{recipe[5]}}</small></p>
-      
+          {%for recipe in recipe_list%}
+          <div class="card mb-3">
+            <div class="row no-gutters">
+              <div class="col-md-3">
+                <img src="https://img.koket.se/sociallarge/lasagne-de-luxe.jpg" class="card-img" alt="">
+              </div>
+              <div class="col-md-9">
+                <div class="card-body">
+                  <h5 class="card-title">{{recipe[1]}}</h5>
+                  <p class="card-text">{{recipe[2]}}</p>
+                  <a href="/recipe/{{recipe[5]}}" class="btn btn-info float-right">Gå till recept</a>
+                  <p class="card-text"><small class="text-muted">Published: {{recipe[4]}}</small></p>
+          
+                </div>
+              </div>
             </div>
           </div>
+          {%endfor%}
         </div>
       </div>
     
