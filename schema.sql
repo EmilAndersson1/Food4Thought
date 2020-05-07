@@ -21,11 +21,11 @@ create table recipe(
 );
 
 create table ingredient_in_recipe(
-    ingredient_name varchar(255) REFERENCES ingredient(ingredient_name),
-    recipe_id integer REFERENCES recipe(recipe_ID),
+    ingredient_name varchar(255),
+    recipe_ID integer REFERENCES recipe(recipe_ID),
     volume integer,
     measurement varchar(255),
-    CONSTRAINT ingredient_in_recipe_ID PRIMARY KEY(ingredient_name, recipe_ID)
+    PRIMARY KEY(ingredient_name)
 );
 
 create table ingredient(
