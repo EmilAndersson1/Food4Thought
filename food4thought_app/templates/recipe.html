@@ -35,7 +35,40 @@
                 <hr/>
             </div>
         </div> 
-        
+        <!-- 
+        <form action="/add_comment/" method="POST">
+            <div class="form-row mt-4">
+                <input type="text" name="recipe_ID" class="hidden" value="{{recipe[0]}}">
+                <div class="col-md-4 mb-3">
+                    <label for="name">Namn:</label> 
+                    <input type="text" class="form-control" id="username" name="username" value={{recipe[1]}} required> 
+                </div>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col-md-8 mb-3">    
+                    <label for="article_text">Kommentar:</label>
+                    <textarea type="text" class="form-control" id="comment_text" rows="6" name="comment" placeholder="Skriv en kommentar" required></textarea>
+                    <input type="submit" class="btn btn-success mt-3" value="Skicka kommentar">
+                </div>
+            </div>
+            </form>
+            {%for comment in comments%}
+            <div class="row col-md-5 mb-4">
+                <div class="card">
+                    <div class="card-header">{{comment[0]}}</div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>{{comment[1]}}</p>
+                            
+                            <footer class="blockquote-footer">
+                                {{comment[2]}}    
+                            </footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        -->
 
     </div>
 
