@@ -31,15 +31,26 @@ def new_recipe():
 
 @app.route('/add_recipe/', methods=['POST'])
 def add_recipe():
+    x = 1
     now = datetime.now()
     title = request.form["title"]
     description = request.form["description"]
     instructions = request.form["instructions"]
     time_published = now.strftime("%Y-%m-%d %H:%M")
-    
     sql = "INSERT INTO recipe VALUES (DEFAULT, DEFAULT, %s, %s, %s, %s)"
     db.cursor.execute(sql, (title, description, instructions, time_published))
-    db.conn.commit()
+
+    ingredient_name = request.form["ingredient_name"]
+    volume = request.form["volume"]
+    measurement = request.form["measurement"]
+
+    while request.form["ingredient_name{}".format(x)] != "":
+        ingredient_name = request.form["ingredient_name{}".format(x)]
+        volume = request.form["volume{}".format(x)]
+        measurement = request.form["measurement{}".format(x)]
+        sql2 = "INSERT INTO ingredient_in_recipe VALUES (%s, DEFAULT, %s, %s)"
+        db.cursor.execute(sql2, (ingredient_name, volume, measurement))
+        db.conn.commit()
 
     return redirect(url_for("index"))
 
