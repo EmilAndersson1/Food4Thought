@@ -14,52 +14,50 @@ def index():
     for recipe in db.cursor:
         recipe_list.append(recipe) 
 
-    return render_template("index.html", recipe_list = recipe_list)
+    user_email = ""
+    if "user_email" in session:
+        user_email = session["user_email"]
 
-@app.before_request
-def before_request():
-    if 'user_id' in session:
-        users = []
-        sql = "select email from users"
-        db.cursor.execute(sql)
-        db.conn.commit()
-        for email in db.cursor:
-            users.append(email)
-        user = [x for x in users if x == session['user_id']]
-        sql2 = "select * from users where email = %s"
+    return render_template("index.html", recipe_list = recipe_list, user_email = user_email)
 
-        x = []
-        db.cursor.execute(sql,(user,))
-        db.conn.commit()
-        for user in db.cursor:
-            x.append(x)
-        g.x = x
+# @app.before_request
+# def before_request():
+#     if 'user_id' in session:
+#         users = []
+#         sql = "select email from users"
+#         db.cursor.execute(sql)
+#         db.conn.commit()
+#         for email in db.cursor:
+#             users.append(email)
+#         user = [x for x in users if x == session['user_id']]
+#         sql2 = "select * from users where email = %s"
+
+#         x = []
+#         db.cursor.execute(sql,(user,))
+#         db.conn.commit()
+#         for user in db.cursor:
+#             x.append(x)
+#         g.x = x
 
 
 @app.route('/login/', methods = ['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        session.pop('user_id', None)
+        #session.pop('user_id', None)
         email = request.form['email']
         user_password = request.form['password']
 
-        sql= "select email, user_password from users where email = %s and user_password = %s"
-        sql_list = []
+        sql= "select email, firstname, lastname, user_password from users where email = %s and user_password = %s"
         db.cursor.execute(sql, (email, user_password))
-        for item in db.cursor:
-            for i in item:
-                sql_list.append(i)
+        user = db.cursor.fetchone()
 
-        input_list = []
+        if user is None:
+            return redirect(url_for('login'))
 
-        input_list.append(email)
-        input_list.append(user_password)
-
-        if input_list==sql_list:
-            session['user_id'] = input_list[0]
-            return redirect(url_for('index'))
-
-        return redirect(url_for('login'))
+        session["user_email"]=user[0]
+        session["user_firstname"]=user[1]
+        session["user_lastname"]=user[2]
+        return redirect(url_for('index'))
 
     return render_template("login.html")
 
