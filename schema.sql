@@ -20,17 +20,18 @@ create table recipe(
     PRIMARY KEY(recipe_ID)
 );
 
-create table ingredient_in_recipe(
+create table ingredient(
+    ingredient_id serial,
     ingredient_name varchar(255),
-    recipe_ID integer REFERENCES recipe(recipe_ID),
     volume integer,
     measurement varchar(255),
-    PRIMARY KEY(ingredient_name)
+    PRIMARY KEY(ingredient_id)
 );
 
-create table ingredient(
-    ingredient_name varchar(255),
-    PRIMARY KEY(ingredient_name)
+create table ingredient_in_recipe(
+    ingredient_id integer REFERENCES ingredient(ingredient_id),
+    recipe_ID integer REFERENCES recipe(recipe_ID),
+    CONSTRAINT ingredient_in_recipe_id PRIMARY KEY(ingredient_id, recipe_id)
 );
 
 create table comment(
