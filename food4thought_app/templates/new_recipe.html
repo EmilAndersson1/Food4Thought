@@ -24,12 +24,20 @@
                     </div>
                 </div>
                 <div id="dynamicInput">
-                    <label for="ingredient_name">Ingrediens 1:</label>
-                    <input type="text" id="ingredient_name" class='mr-1' name="ingredient_name1" required>
-                    <label for="volume" >Mängd:</label>
-                    <input type="text" id="volume" class="mr-1" name="volume1" required>
-                    <label for="measurement">Mått:</label>
-                    <input type="text" id="measurement" class='mr-1' name="measurement1" required>
+                    <div class="form-row ">
+                        <div class="col-md-3">
+                            <label for="ingredient_name">Ingrediens 1:</label>
+                            <input type="text" id="ingredient_name" class='mr-1 form-control' name="ingredient_name1" required>
+                        </div>
+                        <div class="col-md-1">
+                            <label for="volume" >Mängd:</label>
+                            <input type="text" id="volume" class="mr-1 form-control" name="volume1" required>
+                        </div>
+                        <div class="col-md-1">
+                            <label for="measurement">Mått:</label>
+                            <input type="text" id="measurement" class='mr-1 form-control' name="measurement1" required>
+                        </div>  
+                    </div>
                 </div>
                 <input type="button" value="Add another ingredient" id="add_ingredient" class="btn btn-primary mt-3 mb-3">
                 <div class="form-row">
