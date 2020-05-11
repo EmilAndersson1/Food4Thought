@@ -21,24 +21,6 @@ def index():
 
     return render_template("index.html", recipe_list = recipe_list, user_email = user_email)
 
-# @app.before_request
-# def before_request():
-#     if 'user_id' in session:
-#         users = []
-#         sql = "select email from users"
-#         db.cursor.execute(sql)
-#         db.conn.commit()
-#         for email in db.cursor:
-#             users.append(email)
-#         user = [x for x in users if x == session['user_id']]
-#         sql2 = "select * from users where email = %s"
-
-#         x = []
-#         db.cursor.execute(sql,(user,))
-#         db.conn.commit()
-#         for user in db.cursor:
-#             x.append(x)
-#         g.x = x
 
 
 @app.route('/login/', methods = ['GET', 'POST'])
