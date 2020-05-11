@@ -80,17 +80,21 @@ def add_recipe():
     sql = "INSERT INTO recipe VALUES (DEFAULT, DEFAULT, %s, %s, %s, %s)"
     db.cursor.execute(sql, (title, description, instructions, time_published))
 
-    ingredient_name = request.form["ingredient_name"]
-    volume = request.form["volume"]
-    measurement = request.form["measurement"]
+    ingredient_name = request.form["ingredient_name1"]
+    volume = request.form["volume1"]
+    measurement = request.form["measurement1"]
 
-    while request.form["ingredient_name{}".format(x)] != "":
-        ingredient_name = request.form["ingredient_name{}".format(x)]
-        volume = request.form["volume{}".format(x)]
-        measurement = request.form["measurement{}".format(x)]
-        sql2 = "INSERT INTO ingredient_in_recipe VALUES (%s, DEFAULT, %s, %s)"
-        db.cursor.execute(sql2, (ingredient_name, volume, measurement))
-        db.conn.commit()
+    while True:
+        try:
+            ingredient_name = request.form["ingredient_name{}".format(x)]
+            volume = request.form["volume{}".format(x)]
+            measurement = request.form["measurement{}".format(x)]
+            sql2 = "INSERT INTO ingredient VALUES (DEFAULT, %s, %s, %s)"
+            db.cursor.execute(sql2, (ingredient_name, volume, measurement))
+            db.conn.commit()
+            x += 1
+        except:
+            break
 
 
     return redirect(url_for("index"))
