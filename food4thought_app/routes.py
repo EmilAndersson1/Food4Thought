@@ -21,6 +21,21 @@ def index():
 
     return render_template("index.html", recipe_list = recipe_list, user_email = user_email)
 
+@app.route('/profile/')
+def profile():
+    user_email = ""
+    if "user_email" in session:
+        email = session["user_email"]
+        firstname = session["user_firstname"]
+        lastname = session["user_lastname"]
+
+    return render_template("profile.html", firstname=firstname, lastname = lastname, email=email)
+
+
+@app.route('/log_out/')
+def log_out():
+    session.clear()
+    return redirect(url_for("index"))
 
 
 @app.route('/login/', methods = ['GET', 'POST'])
@@ -36,12 +51,12 @@ def login():
 
         if user is None:
             return redirect(url_for('login'))
-
-        session["user_email"]=user[0]
-        session["user_firstname"]=user[1]
-        session["user_lastname"]=user[2]
-        return redirect(url_for('index'))
-
+        else:
+            session["user_email"]=user[0]
+            session["user_firstname"]=user[1]
+            session["user_lastname"]=user[2]
+            session["logged_in"]=True
+            return redirect(url_for('profile'))
     return render_template("login.html")
 
 @app.route('/register/')
