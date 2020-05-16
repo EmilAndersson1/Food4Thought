@@ -8,7 +8,7 @@ from random import randint
 @app.route('/')
 def index():
     recipe_list = []
-    sql = sql = "select username, headline, preamble, instructions, published, recipe_ID from recipe"
+    sql = sql = "select username, title, recipe_description, instructions, time_published, recipe_ID from recipe"
     db.cursor.execute(sql)
 
     
@@ -119,7 +119,7 @@ def add_recipe():
 def show_recipe(recipe_id):
 
     recipe = []
-    sql = "select recipe_id, username, headline, preamble, instructions, published from recipe where recipe_id = %s"
+    sql = "select recipe_id, username, title, recipe_description, instructions, time_published from recipe where recipe_id = %s"
     db.cursor.execute(sql,(recipe_id,))
 
     [recipe.append(i) for recipes in db.cursor for i in recipes ]

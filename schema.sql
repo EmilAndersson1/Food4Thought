@@ -13,10 +13,10 @@ create table users(
 create table recipe(
     recipe_id serial,
     username varchar(255) REFERENCES users(email),
-    headline varchar(255), 
-    preamble text, 
+    title varchar(255), 
+    recipe_description text, 
     instructions text, 
-    published varchar(255),
+    time_published varchar(255),
     PRIMARY KEY(recipe_ID)
 );
 
