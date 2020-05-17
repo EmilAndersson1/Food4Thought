@@ -41,7 +41,6 @@ def log_out():
 @app.route('/login/', methods = ['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        #session.pop('user_id', None)
         email = request.form['email']
         user_password = request.form['password']
 
@@ -74,6 +73,14 @@ def add_user():
 
     db.cursor.execute(sql, (email, firstname, lastname, password))
     db.conn.commit()
+    user = []
+    user.append(email)
+    user.append(firstname)
+    user.append(lastname)
+    session["user_email"]=user[0]
+    session["user_firstname"]=user[1]
+    session["user_lastname"]=user[2]
+    session["logged_in"]=True
 
     return redirect(url_for("index"))
 
