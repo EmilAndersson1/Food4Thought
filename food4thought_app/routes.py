@@ -8,7 +8,7 @@ from random import randint
 @app.route('/')
 def index():
     recipe_list = []
-    sql = sql = "select username, headline, preamble, instructions, published, recipe_ID from recipe"
+    sql = sql = "select username, title, recipe_description, instructions, time_published, recipe_ID from recipe"
     db.cursor.execute(sql)
 
     
@@ -89,15 +89,17 @@ def add_recipe():
     x = 1
     now = datetime.now()
     title = request.form["title"]
-    description = request.form["description"]
+    recipe_description = request.form["description"]
     instructions = request.form["instructions"]
     time_published = now.strftime("%Y-%m-%d %H:%M")
-    sql = "INSERT INTO recipe VALUES (DEFAULT, DEFAULT, %s, %s, %s, %s)"
-    db.cursor.execute(sql, (title, description, instructions, time_published))
+    user = session["user_email"]
+    sql = "INSERT INTO recipe VALUES (DEFAULT, %s, %s, %s, %s, %s)"
+    db.cursor.execute(sql, (user, title, recipe_description, instructions, time_published))
 
     ingredient_name = request.form["ingredient_name1"]
     volume = request.form["volume1"]
     measurement = request.form["measurement1"]
+    ingredienser = []
 
     while True:
         try:
@@ -107,10 +109,20 @@ def add_recipe():
             sql2 = "INSERT INTO ingredient VALUES (DEFAULT, %s, %s, %s)"
             db.cursor.execute(sql2, (ingredient_name, volume, measurement))
             db.conn.commit()
+            db.cursor.execute("select ingredient_name, volume, measurement from ingredient")
+            for ingrediens in db.cursor:
+                ingredienser.append(ingrediens)
+            print(ingredienser)
             x += 1
         except:
             break
 
+    #sql3 = "select ingredient_id, %s from ingredient where ingredient_name = %s and volume = %s and measurement = %s"
+
+    for ingrediens in ingredienser:
+        sql4 = "INSERT INTO ingredient_in_recipe(ingredient_id, recipe_id) select recipe_id, %s from recipe where title = %s and recipe_description = %s and instructions = %s and time_published = %s"
+        db.cursor.execute(sql4,(ingrediens, title, recipe_description, instructions, time_published))
+    db.conn.commit()
 
     return redirect(url_for("index"))
 
