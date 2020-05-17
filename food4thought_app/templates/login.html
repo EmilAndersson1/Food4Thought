@@ -19,6 +19,15 @@
                         
                         <div class="card-header">
                             <h3>Logga in</h3>
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                    <div class="flash mt-3">
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
                         </div>
                         <div class="card-body ">
                             <form action="#" method="POST">

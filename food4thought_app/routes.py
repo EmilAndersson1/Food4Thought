@@ -1,4 +1,4 @@
-from flask import render_template, url_for, request, redirect, session, g
+from flask import render_template, url_for, request, redirect, session, flash
 from food4thought_app import app
 from food4thought_app.database import db
 from datetime import datetime
@@ -50,7 +50,7 @@ def login():
         user = db.cursor.fetchone()
 
         if user is None:
-            return redirect(url_for('login'))
+            flash("Kombinationen finns inte i vår databas, försök igen.")
         else:
             session["user_email"]=user[0]
             session["user_firstname"]=user[1]
