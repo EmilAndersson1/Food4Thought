@@ -37,13 +37,13 @@
                 <hr/>
             </div>
         </div> 
-        <!-- 
+        
         <form action="/add_comment/" method="POST">
             <div class="form-row mt-4">
                 <input type="text" name="recipe_ID" class="hidden" value="{{recipe[0]}}">
                 <div class="col-md-4 mb-3">
                     <label for="name">Namn:</label> 
-                    <input type="text" class="form-control" id="username" name="username" value={{recipe[1]}} required> 
+                    <input type="text" class="form-control" id="username" name="username" value={{session["user_email"]}} disabled> 
                 </div>
             </div>
             <div class="form-row mb-4">
@@ -70,7 +70,7 @@
                 </div>
             </div>
             {%endfor%}
-        -->
+        
 
     </div>
 
