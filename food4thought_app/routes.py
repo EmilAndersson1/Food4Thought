@@ -143,17 +143,17 @@ def show_recipe(recipe_id):
     db.cursor.execute(sql,(recipe_id,))
 
     [recipe.append(i) for recipes in db.cursor for i in recipes ]
-    """
+    
     comments = []
     sql2 = "select comment.username, comment.comment, comment.curr_time, comment.comment_ID, comment.recipe_ID \
             from comment join recipe \
                 on recipe.recipe_ID = comment.recipe_ID \
             where recipe.recipe_ID = %s order by comment.curr_time DESC"    
-    db.cursor.execute(sql2,(recipe_ID,))
+    db.cursor.execute(sql2,(recipe_id,))
     for comment in db.cursor:
         comments.append(comment)
-    """     
-    return render_template("recipe.html", recipe=recipe)
+      
+    return render_template("recipe.html", recipe=recipe, comments=comments)
 
  
 
@@ -190,20 +190,18 @@ def matsedel():
     return render_template("matsedel.html", recipe = request.args.get("recipe_list"))
 
 
-"""
 @app.route('/add_comment/', methods=['POST'])
 def add_comment():
-    recipe_ID = request.form["recipe_ID"]
-    username = request.form["username"]
+    recipe_id = request.form["recipe_ID"]
+    username = session["user_email"]
     comment = request.form["comment"]
     now = datetime.now()
     time_published = now.strftime("%Y-%m-%d %H:%M")
 
     
     sql = "INSERT INTO comment VALUES (DEFAULT, %s, %s, %s, %s)"
-    db.cursor.execute(sql, (recipe_ID, username, comment, time_published))
+    db.cursor.execute(sql, (recipe_id, username, comment, time_published))
     db.conn.commit()
 
-    return redirect("/recipe/{}/".format(recipe_ID))
-"""
+    return redirect("/recipe/{}/".format(recipe_id))
 
