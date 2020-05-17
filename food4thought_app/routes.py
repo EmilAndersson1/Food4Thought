@@ -109,7 +109,9 @@ def add_recipe():
             sql2 = "INSERT INTO ingredient VALUES (DEFAULT, %s, %s, %s)"
             db.cursor.execute(sql2, (ingredient_name, volume, measurement))
             db.conn.commit()
-            db.cursor.execute("select ingredient_name, volume, measurement from ingredient")
+            sql3= "select ingredient_id from ingredient order by ingredient_id desc limit 1"
+            db.cursor.execute(sql3)
+            db.conn.commit()
             for ingrediens in db.cursor:
                 ingredienser.append(ingrediens)
             print(ingredienser)
@@ -117,10 +119,9 @@ def add_recipe():
         except:
             break
 
-    #sql3 = "select ingredient_id, %s from ingredient where ingredient_name = %s and volume = %s and measurement = %s"
 
     for ingrediens in ingredienser:
-        sql4 = "INSERT INTO ingredient_in_recipe(ingredient_id, recipe_id) select recipe_id, %s from recipe where title = %s and recipe_description = %s and instructions = %s and time_published = %s"
+        sql4 = "INSERT INTO ingredient_in_recipe(recipe_id, ingredient_id) select recipe_id, %s from recipe where title = %s and recipe_description = %s and instructions = %s and time_published = %s"
         db.cursor.execute(sql4,(ingrediens, title, recipe_description, instructions, time_published))
     db.conn.commit()
 
