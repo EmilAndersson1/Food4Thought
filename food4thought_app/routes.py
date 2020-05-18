@@ -152,8 +152,17 @@ def show_recipe(recipe_id):
     db.cursor.execute(sql2,(recipe_id,))
     for comment in db.cursor:
         comments.append(comment)
+
+    ingredients = []
+    sql3 = "select ingredient.ingredient_name, ingredient.volume, ingredient.measurement\
+            from ingredient join ingredient_in_recipe \
+                on ingredient_in_recipe.ingredient_id = ingredient.ingredient_id \
+            where ingredient_in_recipe.recipe_id = %s"  
+    db.cursor.execute(sql3,(recipe_id,))
+    for ingredient in db.cursor:
+        ingredients.append(ingredient)
       
-    return render_template("recipe.html", recipe=recipe, comments=comments)
+    return render_template("recipe.html", recipe=recipe, comments=comments, ingredients = ingredients)
 
  
 

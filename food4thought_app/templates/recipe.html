@@ -22,11 +22,19 @@
         <div class="row">
             <div class="col-md-8">
                 <h5>{{recipe[3]}}</h5>
-                
             </div>
         </div> 
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-md-8">
+                <h5>Ingredienser:</h5>
+                {%for ingredient in ingredients%}
+                    <p>{{ingredient[0]}} {{ingredient[1]}}{{ingredient[2]}}</p>
+                {%endfor%}
+            </div>
+        </div> 
+        <div class="row mt-4">
+            <div class="col-md-8">
+                <h5>Instruktioner:</h5>
                 <p>{{recipe[4]}}</p>
                 <hr/>
             </div>
