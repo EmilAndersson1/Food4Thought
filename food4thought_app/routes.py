@@ -2,6 +2,7 @@ from flask import render_template, url_for, request, redirect, session, flash
 from food4thought_app import app
 from food4thought_app.database import db
 from datetime import datetime
+import time
 
 from random import randint
 
@@ -171,6 +172,7 @@ def generator():
 
     return render_template("generator.html")
 
+
 @app.route('/generator-number/', methods=['POST'])
 def gen_number():
     number = request.form["number"]
@@ -179,24 +181,22 @@ def gen_number():
     amount_of_recipes = "select count(*) from recipe"
     db.cursor.execute(amount_of_recipes)
     amount = db.cursor.fetchone()
-    lmao = ""
+    nr_of_recipes = ""
     for a in amount:
-        lmao = a
+         nr_of_recipes = a
     random_numbers = []
     for i in range(int(number)):
-        random_numbers.append(randint(0, lmao))
-    for i in random_numbers:
-        db.cursor.execute(psql,(i,))
-        for recipe in db.cursor:
-            recipe_list.append(list(recipe))
-            
-    print(recipe_list)
+        random_numbers.append(randint(0, nr_of_recipes))
+    while int(number)>len(recipe_list):
+        for i in random_numbers:
+            db.cursor.execute(psql,(i,))
+            for recipe in db.cursor:
+                recipe_list.append(list(recipe))
     return redirect(url_for("matsedel", recipe_list = recipe_list))
 
 @app.route('/matsedel/')
 def matsedel():
-    
-    return render_template("matsedel.html", recipe = request.args.get("recipe_list"))
+    return render_template("matsedel.html", recipe_list = request.args.getlist("recipe_list"))
 
 
 @app.route('/add_comment/', methods=['POST'])
