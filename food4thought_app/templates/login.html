@@ -21,7 +21,7 @@
                             <h3>Logga in</h3>
                             {% with messages = get_flashed_messages() %}
                                 {% if messages %}
-                                    <div class="flash mt-3">
+                                    <div class="flash_login_error mt-3">
                                     {% for message in messages %}
                                         {{ message }}
                                     {% endfor %}
