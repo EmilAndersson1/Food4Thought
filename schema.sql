@@ -46,10 +46,8 @@ create table comment(
 );
 
 create table images(
-    image_id serial,
-    image_filename varchar(255),
-    alt_text varchar(255),
-    PRIMARY KEY(image_id)
+    image_url varchar(255),
+    PRIMARY KEY(image_url)
 );
 
 create table images_in_recipe(
