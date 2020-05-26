@@ -17,6 +17,7 @@ create table recipe(
     recipe_description text, 
     instructions text, 
     time_published varchar(255),
+    image_url varchar(255),
     PRIMARY KEY(recipe_ID)
 );
 
