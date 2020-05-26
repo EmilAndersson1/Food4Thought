@@ -16,7 +16,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col col-4 border-right">
-                <img src="https://pecb.com/conferences/wp-content/uploads/2017/10/no-profile-picture.jpg" class="img-fluid" alt="Profile image" max-width="300" class="middle">
+                <img src="/static/images/{{profile_pic}}" class="img-fluid" alt="Profile image" max-width="300" max-height="400" class="middle">
                 <h2 class="text-center">{{firstname}} {{lastname}}</h2>
             </div>
             <div class="col col-8">
@@ -35,18 +35,46 @@
                   <input type="file" class="custom-file-input" name="image" id="customFile">
                   <label class="custom-file-label" for="customFile">Välj din bild</label>
                 </div>
+                <button type="submit" class="btn btn-block btn-primary mt-3">Ladda upp din bild!</button>
               </form>
-              <button type="submit" class="btn btn-primary mt-3">Ladda upp din bild!</button>
             </div>
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                  <div class="flash_image_upload mt-3 mb-3">
+                  {% for message in messages %}
+                      {{ message }}
+                  {% endfor %}
+                  </div>
+              {% endif %}
+            {% endwith %}
             <li class="nav-item mt-1">
-              <a class="nav-link bg-light" href="#">Link</a>
+              <a class="nav-link bg-light" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">Byta lösenord</a>
             </li>
-            <li class="nav-item mt-1">
-              <a class="nav-link bg-light" href="#">Link</a>
-            </li>
-            <li class="nav-item mt-1">
-              <a class="nav-link bg-light" href="#">Link</a>
-            </li>
+            <div class="collapse mt-3 mb-3" id="collapse2">
+              <form method="POST" action="/change_password/">
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                  </div>
+                  <input type="password" class="form-control" name="password" placeholder="Ditt nuvarande lösenord" required>
+                </div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                  </div>
+                  <input type="password" class="form-control" name="password" placeholder="Välj nytt lösenord" required>
+                </div>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                  </div>
+                  <input type="password" class="form-control" name="password" placeholder="Repetera ditt nya lösenord" required>
+                </div>
+                <div class="form-group mt-4">
+                    <input type="submit" value="Byt lösenord" class="btn btn-primary btn-block mt-4">
+                </div>
+              </form>
+            </div>
           </ul>
         </div>
         </div>

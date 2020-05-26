@@ -31,8 +31,9 @@ def profile():
         email = session["user_email"]
         firstname = session["user_firstname"]
         lastname = session["user_lastname"]
+        profile_pic = session["profile_pic"]
 
-    return render_template("profile.html", firstname=firstname, lastname = lastname, email=email)
+    return render_template("profile.html", firstname=firstname, lastname = lastname, email=email, profile_pic = profile_pic)
 
 
 @app.route('/log_out/')
@@ -47,7 +48,7 @@ def login():
         email = request.form['email']
         user_password = request.form['password']
 
-        sql= "select email, firstname, lastname, user_password from users where email = %s and user_password = %s"
+        sql= "select email, firstname, lastname, user_password, image_url from users where email = %s and user_password = %s"
         db.cursor.execute(sql, (email, user_password))
         user = db.cursor.fetchone()
 
@@ -57,6 +58,7 @@ def login():
             session["user_email"]=user[0]
             session["user_firstname"]=user[1]
             session["user_lastname"]=user[2]
+            session["profile_pic"]=user[4]
             session["logged_in"]=True
             return redirect(url_for('profile'))
     return render_template("login.html")
@@ -72,17 +74,21 @@ def add_user():
     lastname = request.form["lastname"]
     password = request.form["password"]
 
-    sql= "insert into users(email, firstname, lastname, user_password) values (%s,%s,%s,%s)"
+    image_url = "default.jpg"
 
-    db.cursor.execute(sql, (email, firstname, lastname, password))
+    sql= "insert into users(email, firstname, lastname, user_password, image_url) values (%s,%s,%s,%s,%s)"
+
+    db.cursor.execute(sql, (email, firstname, lastname, password, image_url))
     db.conn.commit()
     user = []
     user.append(email)
     user.append(firstname)
     user.append(lastname)
+    user.append(image_url)
     session["user_email"]=user[0]
     session["user_firstname"]=user[1]
     session["user_lastname"]=user[2]
+    session["profile_pic"]= user[3]
     session["logged_in"]=True
 
     return redirect(url_for("index"))
@@ -216,30 +222,23 @@ def add_comment():
 
     return redirect("/recipe/{}/".format(recipe_id))
 
-UPLOAD_FOLDER = "/static/images/"
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
+UPLOAD_FOLDER = "food4thought_app/static/images/"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/upload_profile_image/', methods=['POST'])
 def upload_profile_image():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
+
+    if request.method == "POST":
+
+        if request.files:
+            image = request.files["image"]
+            
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], image.filename))
+            flash("Profilbild uppladdad!")
+            sql = "update users set image_url = %s where email = %s"
+            db.cursor.execute(sql, (image.filename, session["user_email"]))
+            db.conn.commit()
+            session["profile_pic"] = image.filename
+            return redirect(url_for("profile"))
+
     return render_template(url_for("profile"))
