@@ -7,6 +7,7 @@ create table users(
     user_password varchar(255),
     username varchar (255),
     biography text,
+    image_url varchar(255),
     PRIMARY KEY(email)
 );
 
