@@ -14,6 +14,16 @@ html,body{
     opacity: 95%;
 } 
 
+.card-img-1{
+    max-width: 300px;
+    max-height: 200px;
+}
+
+.card-img-2{
+    max-width: 500px;
+    max-height: 500px;
+}
+
 .login-bg{
     background-image: url("/static/login-bg.png");
     background-position: bottom;

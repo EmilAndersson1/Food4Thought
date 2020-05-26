@@ -11,7 +11,7 @@ from werkzeug.utils import secure_filename
 @app.route('/')
 def index():
     recipe_list = []
-    sql = sql = "select username, title, recipe_description, instructions, time_published, recipe_ID from recipe"
+    sql = sql = "select username, title, recipe_description, instructions, time_published, recipe_ID, image_url from recipe"
     db.cursor.execute(sql)
 
     
@@ -99,6 +99,9 @@ def new_recipe():
 
     return render_template("new_recipe.html")
 
+UPLOAD_FOLDER_RECIPE = "food4thought_app/static/recipe_images/"
+app.config['UPLOAD_FOLDER_RECIPE'] = UPLOAD_FOLDER_RECIPE
+
 #tar från formulär för att lägga till recept i databasen
 @app.route('/add_recipe/', methods=['POST'])
 def add_recipe():
@@ -109,8 +112,13 @@ def add_recipe():
     instructions = request.form["instructions"]
     time_published = now.strftime("%Y-%m-%d %H:%M")
     user = session["user_email"]
-    sql = "INSERT INTO recipe VALUES (DEFAULT, %s, %s, %s, %s, %s)"
-    db.cursor.execute(sql, (user, title, recipe_description, instructions, time_published))
+    if request.method == "POST":
+        if request.files:
+            image = request.files["image"]
+            
+            image.save(os.path.join(app.config['UPLOAD_FOLDER_RECIPE'], image.filename))
+    sql = "INSERT INTO recipe VALUES (DEFAULT, %s, %s, %s, %s, %s, %s)"
+    db.cursor.execute(sql, (user, title, recipe_description, instructions, time_published, image.filename))
 
     ingredient_name = request.form["ingredient_name1"]
     volume = request.form["volume1"]
@@ -135,7 +143,6 @@ def add_recipe():
         except:
             break
 
-
     for ingrediens in ingredienser:
         sql4 = "INSERT INTO ingredient_in_recipe(recipe_id, ingredient_id) select recipe_id, %s from recipe where title = %s and recipe_description = %s and instructions = %s and time_published = %s"
         db.cursor.execute(sql4,(ingrediens, title, recipe_description, instructions, time_published))
@@ -148,7 +155,7 @@ def add_recipe():
 def show_recipe(recipe_id):
 
     recipe = []
-    sql = "select recipe_id, username, title, recipe_description, instructions, time_published from recipe where recipe_id = %s"
+    sql = "select recipe_id, username, title, recipe_description, instructions, time_published, image_url from recipe where recipe_id = %s"
     db.cursor.execute(sql,(recipe_id,))
 
     [recipe.append(i) for recipes in db.cursor for i in recipes ]
