@@ -91,7 +91,7 @@ def new_recipe():
     return render_template("new_recipe.html")
 
 #tar från formulär för att lägga till recept i databasen
-@app.route('/add_recipe/', methods=['POST'])
+@app.route('/add_recipe/', methods=["GET", "POST"])
 def add_recipe():
     x = 1
     now = datetime.now()
@@ -126,13 +126,21 @@ def add_recipe():
         except:
             break
 
-
     for ingrediens in ingredienser:
         sql4 = "INSERT INTO ingredient_in_recipe(recipe_id, ingredient_id) select recipe_id, %s from recipe where title = %s and recipe_description = %s and instructions = %s and time_published = %s"
         db.cursor.execute(sql4,(ingrediens, title, recipe_description, instructions, time_published))
     db.conn.commit()
 
+    if request.method == "POST":
+        if request.files:
+            image_filename = request.files["image"]
+            sql = "INSERT INTO images(blob_file) VALUES (DEFAULT, %s)"
+            db.cursor.execute(sql,(image_filename))
+    db.conn.commit()
+
     return redirect(url_for("index"))
+
+
 
 #tar data från databasen för att skriva ut det på recipe.html
 @app.route('/recipe/<recipe_id>/')
@@ -213,4 +221,3 @@ def add_comment():
     db.conn.commit()
 
     return redirect("/recipe/{}/".format(recipe_id))
-

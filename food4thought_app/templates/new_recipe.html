@@ -12,7 +12,7 @@
         {% block content %}
         <div class="container">
         <h1 class="mt-2">Skapa recept</h1>     
-            <form action="/add_recipe/" method="POST">
+            <form action="/add_recipe/" method="POST" enctype="multipart/form-data">
                 <div class="form-row mt-4">
                     <div class="col-md-4 mb-3">
                         <label for="title">Recept titel:</label> 
@@ -21,6 +21,12 @@
                     <div class="col-md-4 mb-3">
                         <label for="description">Beskrivning:</label>
                         <input type="text" class="form-control" id="description" name="description" placeholder="Kort beskrivning..." required>
+                    </div>
+                </div>
+                <div class="form-row ">
+                    <div>
+                        <label for="image">Välj en bild</label>
+                        <input type="file" name="image">
                     </div>
                 </div>
                 <div id="dynamicInput">

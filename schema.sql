@@ -15,7 +15,7 @@ create table recipe(
     username varchar(255) REFERENCES users(email),
     title varchar(255), 
     recipe_description text, 
-    instructions text, 
+    instructions text,
     time_published varchar(255),
     PRIMARY KEY(recipe_ID)
 );
@@ -45,8 +45,7 @@ create table comment(
 
 create table images(
     image_id serial,
-    image_filename varchar(255),
-    alt_text varchar(255),
+    image_filename bytea,
     PRIMARY KEY(image_id)
 );
 
