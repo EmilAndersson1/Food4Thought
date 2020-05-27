@@ -11,18 +11,14 @@ from werkzeug.utils import secure_filename
 @app.route('/')
 def index():
     recipe_list = []
-    sql = sql = "select username, title, recipe_description, instructions, time_published, recipe_ID, image_url from recipe"
+    sql = "select username, title, recipe_description, instructions, time_published, recipe_ID, image_url from recipe"
     db.cursor.execute(sql)
 
     
     for recipe in db.cursor:
         recipe_list.append(recipe) 
 
-    user_email = ""
-    if "user_email" in session:
-        user_email = session["user_email"]
-
-    return render_template("index.html", recipe_list = recipe_list, user_email = user_email)
+    return render_template("index.html", recipe_list = recipe_list)
 
 @app.route('/profile/')
 def profile():
@@ -249,3 +245,15 @@ def upload_profile_image():
             return redirect(url_for("profile"))
 
     return render_template(url_for("profile"))
+
+@app.route('/mina-recept/')
+def my_recipes():
+    recipe_list = []
+    sql = "select username, title, recipe_description, instructions, time_published, recipe_ID, image_url from recipe where username = %s"
+
+    db.cursor.execute(sql,(session["user_email"],))
+
+    for recipe in db.cursor:
+        recipe_list.append(recipe) 
+
+    return render_template("myrecipes.html", recipe_list = recipe_list)
