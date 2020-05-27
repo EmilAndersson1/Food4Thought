@@ -53,7 +53,7 @@
                 <input type="text" name="recipe_ID" class="hidden" value="{{recipe[0]}}">
                 <div class="col-md-4 mb-3">
                     <label for="name">Namn:</label> 
-                    <input type="text" class="form-control" id="username" name="username" value={{session["user_email"]}} disabled> 
+                    <input type="text" class="form-control" id="username" name="username" value={{session["user_firstname"]}} disabled> 
                 </div>
             </div>
             <div class="form-row mb-4">
@@ -67,7 +67,7 @@
             {%for comment in comments%}
             <div class="row col-md-5 mb-4">
                 <div class="card">
-                    <div class="card-header">{{comment[0]}}</div>
+                    <div class="card-header">{{session["user_firstname"]}}</div>
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
                             <p>{{comment[1]}}</p>
