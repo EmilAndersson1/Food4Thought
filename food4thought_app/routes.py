@@ -5,7 +5,7 @@ from datetime import datetime
 import time
 
 import os
-from random import randint
+import random
 from werkzeug.utils import secure_filename
 
 @app.route('/')
@@ -180,34 +180,21 @@ def show_recipe(recipe_id):
 
 @app.route('/generator/')
 def generator():
-
     return render_template("generator.html")
 
 
-@app.route('/generator-number/', methods=['POST'])
+@app.route('/matsedel/', methods=['POST'])
 def gen_number():
     number = request.form["number"]
     recipe_list = []
-    psql = "select * from recipe where recipe_id = %s"
-    amount_of_recipes = "select count(*) from recipe"
-    db.cursor.execute(amount_of_recipes)
-    amount = db.cursor.fetchone()
-    nr_of_recipes = ""
-    for a in amount:
-         nr_of_recipes = a
-    random_numbers = []
-    for i in range(int(number)):
-        random_numbers.append(randint(0, nr_of_recipes))
-    while int(number)>len(recipe_list):
-        for i in random_numbers:
-            db.cursor.execute(psql,(i,))
-            for recipe in db.cursor:
-                recipe_list.append(list(recipe))
-    return redirect(url_for("matsedel", recipe_list = recipe_list))
+    sql = "select recipe_id, username, title, recipe_description, instructions, time_published, image_url from recipe"
+    db.cursor.execute(sql)
+    for recipe in db.cursor:
+        recipe_list.append(recipe)
 
-@app.route('/matsedel/')
-def matsedel():
-    return render_template("matsedel.html", recipe_list = request.args.getlist("recipe_list"))
+    list_of_random_recipes = random.sample(recipe_list, int(number))
+
+    return render_template("matsedel.html", recipe_list = list_of_random_recipes)
 
 
 @app.route('/add_comment/', methods=['POST'])

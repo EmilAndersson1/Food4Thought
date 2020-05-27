@@ -16,20 +16,17 @@
     
     
           {%for recipe in recipe_list%}
-          {%set url = recipe.split(",")[0].replace("[", "")%}
-          {%set picture = recipe.split(",")[10].replace("'", "").replace("]", "")%}
-          <div class="card mb-3 mt-4">
+          <div class="card mt-4">
             <div class="row no-gutters">
               <div class="col-md-3">
-                <img src=‘static/recipe_images/{{picture}}‘ class="card-img-1" alt="Bild på recept" max-width="100" max-height="100">
+                <img src="/static/recipe_images/{{recipe[6]}}" class="card-img-1" alt="Bild på recept" max-width="100" max-height="100">
               </div>
               <div class="col-md-9">
                 <div class="card-body">
-                  <h5 class="card-title">{{recipe.split(",")[2].replace("'", "")}}</h5>
-                  <h5 class="card-title">{{picture}}</h5>
-                  <p class="card-text">{{recipe.split(",")[3].replace("'", "")}}</p>
-                  <a href="/recipe/{{url}}" class="btn btn-info float-right">Gå till recept</a>
-                  <p class="card-text"><small class="text-muted">Published: {{recipe.split(",")[5].replace("'", "").replace("]", "")}}</small></p>
+                  <h5 class="card-title">{{recipe[2]}}</h5>
+                  <p class="card-text">{{recipe[3]}}</p>
+                  <a href="/recipe/{{recipe[1]}}" class="btn btn-info float-right">Gå till recept</a>
+                  <p class="card-text"><small class="text-muted">Published: {{recipe[5]}} </small></p>
           
                 </div>
               </div>
