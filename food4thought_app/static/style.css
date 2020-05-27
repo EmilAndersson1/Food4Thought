@@ -71,3 +71,7 @@ input[type=submit] {
     margin: 4px 2px;
     cursor: pointer;
   }
+
+.bg-light{
+    background-color: #a62323;
+}
