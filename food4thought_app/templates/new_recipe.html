@@ -23,10 +23,6 @@
                         <input type="text" class="form-control" id="description" name="description" placeholder="Kort beskrivning..." required>
                     </div>
                 </div>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="image" id="customFile" required>
-                    <label class="custom-file-label" for="customFile">Välj din bild</label>
-                </div>
                 <div id="dynamicInput">
                     <div class="form-row ">
                         <div class="col-md-3">
@@ -48,8 +44,12 @@
                     <div class="col-md-8 mb-3">    
                         <label for="instructions">Instruktioner:</label>
                         <textarea class="form-control" id="instructions" rows="6" name="instructions" placeholder="Instruktioner för receptet..." required></textarea>
-                        <input type="submit" class="btn btn-success mt-3" value="Skapa receptet!">
-                        <a href="/" class=" btn btn-danger mt-3 ml-2">Avbryt</a>
+                    <div class="custom-file mt-4 mb-4">
+                        <input type="file" class="custom-file-input" name="image" id="customFile" required>
+                        <label class="custom-file-label" for="customFile">Välj din bild</label>
+                    </div>
+                    <input type="submit" class="btn btn-success mt-3" value="Skapa receptet!">
+                    <a href="/" class=" btn btn-danger mt-3 ml-2">Avbryt</a>
                     </div>
                 </div>
             </form>  
