@@ -17,36 +17,33 @@
                 <h2>{{recipe[2]}}</h2>
                 <hr/>
             </div>
-            
         </div>
-        <div class="row">
-            <div class="col-md-8">
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <img src="/static/recipe_images/{{recipe[6]}}" max-width="100" max-height="100" class="card-img-2" alt="Bild på recept">
+            </div>  
+            <div class="col-md-5">
                 <h5>{{recipe[3]}}</h5>
             </div>
         </div>
+        
         <div class="row mt-4">
-            <div class="col-md-8">
-                <img src="/static/recipe_images/{{recipe[6]}}" max-width="100" max-height="100" class="card-img-2" alt="Bild på recept">
-            </div>  
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-8">
+            <div class="col-md-3">
                 <h5>Ingredienser:</h5>
                 {%for ingredient in ingredients%}
                     <p>{{ingredient[0]}} {{ingredient[1]}}{{ingredient[2]}}</p>
                 {%endfor%}
+                
             </div>
-        </div> 
-        <div class="row mt-4">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <h5>Instruktioner:</h5>
                 <p>{{recipe[4]}}</p>
-                <hr/>
             </div>
         </div> 
         <div class="row">
             <div class="col-md-8">
-                <p>{{recipe[5]}}</p>
+                <hr/>
+                <p>Publicerad: {{recipe[5]}}</p>
                 <hr/>
             </div>
         </div> 
