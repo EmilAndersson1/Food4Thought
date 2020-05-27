@@ -13,7 +13,7 @@
       {% extends "navbar.html" %}
       {% block content %}
       <div class="container mt-5">
-        
+        {%if recipe_list != None%}
         {%for recipe in recipe_list%}
           <div class="card mb-3">
             <div class="row no-gutters">
@@ -31,7 +31,12 @@
             </div>
           </div>
           {%endfor%}
+          {{else}}
+        <h2>Nothing to see here....</h2>
+        <h5 class="mt-4">Det verkar som du inte har laddat upp några recept... Ta och ladda upp ett recept och återkom här senare!</h5>
         </div>
+        
+        {%endif%}
         {% endblock %}
         </div>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
