@@ -14,13 +14,13 @@
     {% block content %}
     <div class="container">
     
-    <div class="card mb-3">
+    
           {%for recipe in recipe_list%}
           {%set url = recipe.split(",")[0].replace("[", "")%}
-          <div class="card mb-3">
+          <div class="card mb-3 mt-4">
             <div class="row no-gutters">
               <div class="col-md-3">
-                <img src="https://img.koket.se/sociallarge/lasagne-de-luxe.jpg" class="card-img" alt="">
+                <img src="/static/recipe_images/" class="card-img" alt="">
               </div>
               <div class="col-md-9">
                 <div class="card-body">
@@ -34,7 +34,7 @@
             </div>
           </div>
           {%endfor%}
-        </div>
+        
       </div>
     
     </div>
